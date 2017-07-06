@@ -17,6 +17,21 @@ type digest32 struct {
 	seed, v1, v2, v3, v4 uint32
 	buf                  *bytes.Buffer
 	totalLen             int
+	rbuf                 [4]byte
+}
+
+func (d *digest32) read32() (v uint32) {
+	d.buf.Read(d.rbuf[:4])
+	for i := 0; i < 4; i++ {
+		v |= uint32(d.rbuf[i]) << (8 * uint(i))
+	}
+	return
+
+}
+
+func (d *digest32) read8() uint32 {
+	d.buf.Read(d.rbuf[:1])
+	return uint32(d.rbuf[0])
 }
 
 // New32 returns new hash.Hash32
@@ -63,10 +78,10 @@ func (d *digest32) BlockSize() int {
 
 func (d *digest32) update() {
 	for d.buf.Len() >= 16 {
-		d.v1 = round32(d.v1, read32(d.buf))
-		d.v2 = round32(d.v2, read32(d.buf))
-		d.v3 = round32(d.v3, read32(d.buf))
-		d.v4 = round32(d.v4, read32(d.buf))
+		d.v1 = round32(d.v1, d.read32())
+		d.v2 = round32(d.v2, d.read32())
+		d.v3 = round32(d.v3, d.read32())
+		d.v4 = round32(d.v4, d.read32())
 	}
 }
 
@@ -80,12 +95,12 @@ func (d *digest32) digest() (sum uint32) {
 	sum += uint32(d.totalLen)
 
 	for d.buf.Len() >= 4 {
-		sum += read32(d.buf) * prime32_3
+		sum += d.read32() * prime32_3
 		sum = rotl32(sum, 17) * prime32_4
 	}
 
 	for d.buf.Len() >= 1 {
-		sum += uint32(read8(d.buf)) * prime32_5
+		sum += d.read8() * prime32_5
 		sum = rotl32(sum, 11) * prime32_1
 	}
 

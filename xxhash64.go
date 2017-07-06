@@ -17,6 +17,28 @@ type digest64 struct {
 	seed, v1, v2, v3, v4 uint64
 	buf                  *bytes.Buffer
 	totalLen             int
+	rbuf                 [8]byte
+}
+
+func (d *digest64) read64() (v uint64) {
+	d.buf.Read(d.rbuf[:8])
+	for i := 0; i < 8; i++ {
+		v |= uint64(d.rbuf[i]) << (8 * uint(i))
+	}
+	return
+}
+
+func (d *digest64) read32() (v uint64) {
+	d.buf.Read(d.rbuf[:4])
+	for i := 0; i < 4; i++ {
+		v |= uint64(d.rbuf[i]) << (8 * uint(i))
+	}
+	return
+}
+
+func (d *digest64) read8() uint64 {
+	d.buf.Read(d.rbuf[:1])
+	return uint64(d.rbuf[0])
 }
 
 // New64 returns new hash.Hash64
@@ -63,10 +85,10 @@ func (d *digest64) BlockSize() int {
 
 func (d *digest64) update() {
 	for d.buf.Len() > 32 {
-		d.v1 = round64(d.v1, read64(d.buf))
-		d.v2 = round64(d.v2, read64(d.buf))
-		d.v3 = round64(d.v3, read64(d.buf))
-		d.v4 = round64(d.v4, read64(d.buf))
+		d.v1 = round64(d.v1, d.read64())
+		d.v2 = round64(d.v2, d.read64())
+		d.v3 = round64(d.v3, d.read64())
+		d.v4 = round64(d.v4, d.read64())
 	}
 }
 
@@ -84,17 +106,17 @@ func (d *digest64) digest() (sum uint64) {
 	sum += uint64(d.totalLen)
 
 	for d.buf.Len() >= 8 {
-		sum ^= round64(0, read64(d.buf))
+		sum ^= round64(0, d.read64())
 		sum = rotl64(sum, 27)*prime64_1 + prime64_4
 	}
 
 	if d.buf.Len() >= 4 {
-		sum ^= uint64(read32(d.buf)) * prime64_1
+		sum ^= d.read32() * prime64_1
 		sum = rotl64(sum, 23)*prime64_2 + prime64_3
 	}
 
 	for d.buf.Len() >= 1 {
-		sum ^= uint64(read8(d.buf)) * prime64_5
+		sum ^= d.read8() * prime64_5
 		sum = rotl64(sum, 11) * prime64_1
 	}
 
