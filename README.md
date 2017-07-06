@@ -6,6 +6,8 @@
 This package implements [xxHash](https://cyan4973.github.io/xxHash/) in Go
 
 ```
-BenchmarkXXHash32-8      1000000              1298 ns/op             416 B/op         52 allocs/op
-BenchmarkXXHash64-8      2000000               721 ns/op             224 B/op         28 allocs/op
+BenchmarkXXHash32-4   	 1000000	      1017 ns/op	     104 B/op	      26 allocs/op
+BenchmarkXXHash64-4   	 2000000	       698 ns/op	     104 B/op	      14 allocs/op
 ```
+
+Tested on 1.3 GHz Intel Core i5
