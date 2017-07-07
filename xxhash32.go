@@ -78,7 +78,7 @@ func (d *digest32) Size() int {
 }
 
 func (d *digest32) BlockSize() int {
-	return 1
+	return 16
 }
 
 func (d *digest32) Sum32() uint32 {

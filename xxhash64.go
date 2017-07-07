@@ -85,7 +85,7 @@ func (d *digest64) Size() int {
 }
 
 func (d *digest64) BlockSize() int {
-	return 1
+	return 32
 }
 
 func (d *digest64) Sum64() uint64 {
