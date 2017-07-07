@@ -42,6 +42,7 @@ func TestXXHash64(t *testing.T) {
 func BenchmarkXXHash64(b *testing.B) {
 	h := New64(prime)
 	for i := 0; i < b.N; i++ {
+		h.Reset()
 		h.Write(sanityBuf)
 		h.Sum64()
 	}

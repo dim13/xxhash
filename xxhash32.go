@@ -47,7 +47,12 @@ func (d *digest32) Write(p []byte) (n int, err error) {
 		return 0, err
 	}
 	d.totalLen += n
-	d.update()
+	for d.buf.Len() >= 16 {
+		d.v1 = round32(d.v1, d.read32())
+		d.v2 = round32(d.v2, d.read32())
+		d.v3 = round32(d.v3, d.read32())
+		d.v4 = round32(d.v4, d.read32())
+	}
 	return n, nil
 }
 
@@ -76,16 +81,8 @@ func (d *digest32) BlockSize() int {
 	return 1
 }
 
-func (d *digest32) update() {
-	for d.buf.Len() >= 16 {
-		d.v1 = round32(d.v1, d.read32())
-		d.v2 = round32(d.v2, d.read32())
-		d.v3 = round32(d.v3, d.read32())
-		d.v4 = round32(d.v4, d.read32())
-	}
-}
-
-func (d *digest32) digest() (sum uint32) {
+func (d *digest32) Sum32() uint32 {
+	var sum uint32
 	if d.totalLen >= 16 {
 		sum = rotl32(d.v1, 1) + rotl32(d.v2, 7) + rotl32(d.v3, 12) + rotl32(d.v4, 18)
 	} else {
@@ -111,11 +108,6 @@ func (d *digest32) digest() (sum uint32) {
 	sum ^= sum >> 16
 
 	return sum
-}
-
-func (d *digest32) Sum32() uint32 {
-	d.update()
-	return d.digest()
 }
 
 func round32(acc, val uint32) uint32 {

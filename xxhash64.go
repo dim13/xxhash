@@ -54,7 +54,12 @@ func (d *digest64) Write(p []byte) (n int, err error) {
 		return 0, err
 	}
 	d.totalLen += n
-	d.update()
+	for d.buf.Len() > 32 {
+		d.v1 = round64(d.v1, d.read64())
+		d.v2 = round64(d.v2, d.read64())
+		d.v3 = round64(d.v3, d.read64())
+		d.v4 = round64(d.v4, d.read64())
+	}
 	return n, nil
 }
 
@@ -83,16 +88,8 @@ func (d *digest64) BlockSize() int {
 	return 1
 }
 
-func (d *digest64) update() {
-	for d.buf.Len() > 32 {
-		d.v1 = round64(d.v1, d.read64())
-		d.v2 = round64(d.v2, d.read64())
-		d.v3 = round64(d.v3, d.read64())
-		d.v4 = round64(d.v4, d.read64())
-	}
-}
-
-func (d *digest64) digest() (sum uint64) {
+func (d *digest64) Sum64() uint64 {
+	var sum uint64
 	if d.totalLen >= 32 {
 		sum = rotl64(d.v1, 1) + rotl64(d.v2, 7) + rotl64(d.v3, 12) + rotl64(d.v4, 18)
 		sum = merge64(sum, d.v1)
@@ -127,11 +124,6 @@ func (d *digest64) digest() (sum uint64) {
 	sum ^= sum >> 32
 
 	return sum
-}
-
-func (d *digest64) Sum64() uint64 {
-	d.update()
-	return d.digest()
 }
 
 func round64(acc, val uint64) uint64 {

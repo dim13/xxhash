@@ -42,6 +42,7 @@ func TestXXHash32(t *testing.T) {
 func BenchmarkXXHash32(b *testing.B) {
 	h := New32(prime)
 	for i := 0; i < b.N; i++ {
+		h.Reset()
 		h.Write(sanityBuf)
 		h.Sum32()
 	}
