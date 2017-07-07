@@ -1,9 +1,9 @@
 [![Build Status](https://travis-ci.org/dim13/xxhash.svg?branch=master)](https://travis-ci.org/dim13/xxhash)
 [![GoDoc](https://godoc.org/github.com/dim13/xxhash?status.svg)](https://godoc.org/github.com/dim13/xxhash)
 
-# xxhash is a non-cryptographic hash algorithm
+# xxhash
 
-This package implements [xxHash](https://cyan4973.github.io/xxHash/) in Go
+[xxHash](https://cyan4973.github.io/xxHash/) in pure Go
 
 ```
 BenchmarkXXHash32-4   	 3000000	       505 ns/op	       0 B/op	       0 allocs/op
