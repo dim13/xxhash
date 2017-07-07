@@ -120,9 +120,7 @@ func (d *digest32) Sum32() uint32 {
 
 func round32(acc, val uint32) uint32 {
 	acc += val * prime32_2
-	acc = rotl32(acc, 13)
-	acc *= prime32_1
-	return acc
+	return rotl32(acc, 13) * prime32_1
 }
 
 func rotl32(x uint32, r uint) uint32 {

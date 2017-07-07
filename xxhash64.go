@@ -136,16 +136,12 @@ func (d *digest64) Sum64() uint64 {
 
 func round64(acc, val uint64) uint64 {
 	acc += val * prime64_2
-	acc = rotl64(acc, 31)
-	acc *= prime64_1
-	return acc
+	return rotl64(acc, 31) * prime64_1
 }
 
 func merge64(acc, val uint64) uint64 {
-	val = round64(0, val)
-	acc ^= val
-	acc = acc*prime64_1 + prime64_4
-	return acc
+	acc ^= round64(0, val)
+	return acc*prime64_1 + prime64_4
 }
 
 func rotl64(x uint64, r uint) uint64 {
