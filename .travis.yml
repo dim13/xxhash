@@ -1,3 +1,6 @@
 language: go
 go:
   - 1.x
+script:
+  - go vet
+  - go test -v -cover -bench=. -benchmem
