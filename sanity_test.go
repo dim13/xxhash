@@ -7,18 +7,19 @@ import (
 
 const prime = 2654435761
 
-var sanityBuf = func(n int) []byte {
-	buf := make([]byte, n)
+func newSanityBuf() []byte {
+	buf := make([]byte, 101)
 	tmp := prime
-	for i := 0; i < n; i++ {
+	for i := range buf {
 		buf[i] = byte(tmp >> 24)
 		tmp *= tmp
 	}
 	return buf
-}(101)
+}
 
 func TestSanityBuf(t *testing.T) {
-	sample := []byte{
+	sanityBuf := newSanityBuf()
+	golden := []byte{
 		0x9e, 0xff, 0x1f, 0x4b, 0x5e, 0x53, 0x2f, 0xdd, 0xb5, 0x54,
 		0x4d, 0x2a, 0x95, 0x2b, 0x57, 0xae, 0x5d, 0xba, 0x74, 0xe9,
 		0xd3, 0xa6, 0x4c, 0x98, 0x30, 0x60, 0xc0, 0x80, 0x00, 0x00,
@@ -31,7 +32,7 @@ func TestSanityBuf(t *testing.T) {
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00,
 	}
-	if !bytes.Equal(sanityBuf, sample) {
-		t.Fatalf("got %x, want %x", sanityBuf, sample)
+	if !bytes.Equal(sanityBuf, golden) {
+		t.Fatalf("got %x, want %x", sanityBuf, golden)
 	}
 }
