@@ -5,12 +5,12 @@ import (
 	"testing"
 )
 
-const prime = 0x9e3779b1
+const sanityPrime = 0x9e3779b1
 
 func newSanityBuf(tb testing.TB) []byte {
 	tb.Helper()
 	buf := make([]byte, 101)
-	tmp := prime
+	tmp := sanityPrime
 	for i := range buf {
 		buf[i] = byte(tmp >> 24)
 		tmp *= tmp

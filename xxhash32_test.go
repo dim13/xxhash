@@ -13,13 +13,13 @@ func TestXXHash32(t *testing.T) {
 		result   uint32
 	}{
 		{nil, 0, 0x02CC5D05},
-		{nil, prime, 0x36B78AE7},
+		{nil, sanityPrime, 0x36B78AE7},
 		{sanityBuf[:1], 0, 0xB85CBEE5},
-		{sanityBuf[:1], prime, 0xD5845D64},
+		{sanityBuf[:1], sanityPrime, 0xD5845D64},
 		{sanityBuf[:14], 0, 0xE5AA0AB4},
-		{sanityBuf[:14], prime, 0x4481951D},
+		{sanityBuf[:14], sanityPrime, 0x4481951D},
 		{sanityBuf, 0, 0x1F1AA412},
-		{sanityBuf, prime, 0x498EC8E2},
+		{sanityBuf, sanityPrime, 0x498EC8E2},
 	}
 
 	for _, tc := range testCases {
@@ -42,7 +42,7 @@ func TestXXHash32(t *testing.T) {
 
 func BenchmarkXXHash32(b *testing.B) {
 	sanityBuf := newSanityBuf(b)
-	h := New32(prime)
+	h := New32(sanityPrime)
 	for i := 0; i < b.N; i++ {
 		h.Reset()
 		h.Write(sanityBuf)

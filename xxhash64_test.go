@@ -13,13 +13,13 @@ func TestXXHash64(t *testing.T) {
 		result   uint64
 	}{
 		{nil, 0, 0xEF46DB3751D8E999},
-		{nil, prime, 0xAC75FDA2929B17EF},
+		{nil, sanityPrime, 0xAC75FDA2929B17EF},
 		{sanityBuf[:1], 0, 0x4FCE394CC88952D8},
-		{sanityBuf[:1], prime, 0x739840CB819FA723},
+		{sanityBuf[:1], sanityPrime, 0x739840CB819FA723},
 		{sanityBuf[:14], 0, 0xCFFA8DB881BC3A3D},
-		{sanityBuf[:14], prime, 0x5B9611585EFCC9CB},
+		{sanityBuf[:14], sanityPrime, 0x5B9611585EFCC9CB},
 		{sanityBuf, 0, 0x0EAB543384F878AD},
-		{sanityBuf, prime, 0xCAA65939306F1E21},
+		{sanityBuf, sanityPrime, 0xCAA65939306F1E21},
 	}
 
 	for _, tc := range testCases {
@@ -42,7 +42,7 @@ func TestXXHash64(t *testing.T) {
 
 func BenchmarkXXHash64(b *testing.B) {
 	sanityBuf := newSanityBuf(b)
-	h := New64(prime)
+	h := New64(sanityPrime)
 	for i := 0; i < b.N; i++ {
 		h.Reset()
 		h.Write(sanityBuf)
