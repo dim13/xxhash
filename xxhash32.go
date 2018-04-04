@@ -6,11 +6,11 @@ import (
 )
 
 const (
-	prime32_1 = 2654435761
-	prime32_2 = 2246822519
-	prime32_3 = 3266489917
-	prime32_4 = 668265263
-	prime32_5 = 374761393
+	prime32_1 = 0x9e3779b1
+	prime32_2 = 0x85ebca77
+	prime32_3 = 0xc2b2ae3d
+	prime32_4 = 0x27d4eb2f
+	prime32_5 = 0x165667b1
 )
 
 type digest32 struct {

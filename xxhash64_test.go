@@ -6,7 +6,7 @@ import (
 )
 
 func TestXXHash64(t *testing.T) {
-	sanityBuf := newSanityBuf()
+	sanityBuf := newSanityBuf(t)
 	testCases := []struct {
 		sequence []byte
 		seed     uint64
@@ -41,7 +41,7 @@ func TestXXHash64(t *testing.T) {
 }
 
 func BenchmarkXXHash64(b *testing.B) {
-	sanityBuf := newSanityBuf()
+	sanityBuf := newSanityBuf(b)
 	h := New64(prime)
 	for i := 0; i < b.N; i++ {
 		h.Reset()

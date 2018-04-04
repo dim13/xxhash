@@ -5,9 +5,10 @@ import (
 	"testing"
 )
 
-const prime = 2654435761
+const prime = 0x9e3779b1
 
-func newSanityBuf() []byte {
+func newSanityBuf(tb testing.TB) []byte {
+	tb.Helper()
 	buf := make([]byte, 101)
 	tmp := prime
 	for i := range buf {
@@ -18,7 +19,7 @@ func newSanityBuf() []byte {
 }
 
 func TestSanityBuf(t *testing.T) {
-	sanityBuf := newSanityBuf()
+	sanityBuf := newSanityBuf(t)
 	golden := []byte{
 		0x9e, 0xff, 0x1f, 0x4b, 0x5e, 0x53, 0x2f, 0xdd, 0xb5, 0x54,
 		0x4d, 0x2a, 0x95, 0x2b, 0x57, 0xae, 0x5d, 0xba, 0x74, 0xe9,
