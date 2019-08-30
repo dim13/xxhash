@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/dim13/xxhash.svg?branch=master)](https://travis-ci.org/dim13/xxhash)
-[![GoDoc](https://godoc.org/github.com/dim13/xxhash?status.svg)](https://godoc.org/github.com/dim13/xxhash)
-
 # xxhash
+
+[![GoDoc](https://godoc.org/github.com/dim13/xxhash?status.svg)](https://godoc.org/github.com/dim13/xxhash)
+[![Build](https://github.com/dim13/xxhash/workflows/build/badge.svg)](https://github.com/dim13/xxhash/actions)
 
 [xxHash](https://cyan4973.github.io/xxHash/) in pure Go
 
