@@ -1,13 +1,10 @@
 # xxhash
 
-[![GoDoc](https://godoc.org/github.com/dim13/xxhash?status.svg)](https://godoc.org/github.com/dim13/xxhash)
-[![Build](https://github.com/dim13/xxhash/workflows/build/badge.svg)](https://github.com/dim13/xxhash/actions)
+Go implementation of [xxhash][1].
 
-[xxHash](https://cyan4973.github.io/xxHash/) in pure Go
+## benchmark (Air/M1)
 
-```
-BenchmarkXXHash32-4   	 3000000	       505 ns/op	       0 B/op	       0 allocs/op
-BenchmarkXXHash64-4   	 5000000	       399 ns/op	       0 B/op	       0 allocs/op
-```
+	BenchmarkXXHash32-8   	 6674638	       150.4 ns/op	       0 B/op	       0 allocs/op
+	BenchmarkXXHash64-8   	11604330	       104.6 ns/op	       0 B/op	       0 allocs/op
 
-Tested on 1.3 GHz Intel Core i5
+[1]: https://cyan4973.github.io/xxHash/
