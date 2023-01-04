@@ -34,8 +34,8 @@ func (d *digest32) read8() uint32 {
 	return uint32(d.rbuf[0])
 }
 
-// New32 returns new hash.Hash32
-func New32(seed uint32) hash.Hash32 {
+// XXH32 returns new hash.Hash32
+func XXH32(seed uint32) hash.Hash32 {
 	d := &digest32{seed: seed, buf: new(bytes.Buffer)}
 	d.Reset()
 	return d

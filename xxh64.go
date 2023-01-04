@@ -41,8 +41,8 @@ func (d *digest64) read8() uint64 {
 	return uint64(d.rbuf[0])
 }
 
-// New64 returns new hash.Hash64
-func New64(seed uint64) hash.Hash64 {
+// XXH64 returns new hash.Hash64
+func XXH64(seed uint64) hash.Hash64 {
 	d := &digest64{seed: seed, buf: new(bytes.Buffer)}
 	d.Reset()
 	return d

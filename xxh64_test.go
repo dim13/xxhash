@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestXXHash64(t *testing.T) {
+func TestXXH64(t *testing.T) {
 	sanityBuf := newSanityBuf(t)
 	testCases := []struct {
 		sequence []byte
@@ -24,7 +24,7 @@ func TestXXHash64(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(fmt.Sprintf("len=%v,seed=%v", len(tc.sequence), tc.seed), func(t *testing.T) {
-			h := New64(tc.seed)
+			h := XXH64(tc.seed)
 			n, err := h.Write(tc.sequence)
 			if err != nil {
 				t.Error("write:", err)
@@ -40,9 +40,9 @@ func TestXXHash64(t *testing.T) {
 	}
 }
 
-func BenchmarkXXHash64(b *testing.B) {
+func BenchmarkXXH64(b *testing.B) {
 	sanityBuf := newSanityBuf(b)
-	h := New64(sanityPrime)
+	h := XXH64(sanityPrime)
 	for i := 0; i < b.N; i++ {
 		h.Reset()
 		h.Write(sanityBuf)
